@@ -37,10 +37,10 @@ public class Car {
 
     @Override
     public String toString() {
-        return "\n\t Car{" +
-                "\n\t\t name='" + name + '\'' + "\n" +
-                "\t\t, carNum='" + carNum + '\'' + "\n" +
-                "\t\t, type='" + type + '\'' + "\n" +
-                "\t" + '}';
+        return "Car{" +
+                "name='" + name + '\'' +
+                ", carNum='" + carNum + '\'' +
+                ", type='" + type + '\'' +
+                '}';
     }
 }

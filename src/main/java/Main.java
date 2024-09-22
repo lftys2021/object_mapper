@@ -1,5 +1,8 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import dto.Car;
 import dto.User;
 
@@ -8,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws JsonProcessingException {
         System.out.println("main");
 
         ObjectMapper om = new ObjectMapper();
@@ -32,12 +35,19 @@ public class Main {
 
         //System.out.println(user);
 
-        String json = null;
-        try {
-            json = om.writeValueAsString(user);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        String json = om.writeValueAsString(user);
         System.out.println(json);
+
+        JsonNode jsonNode = om.readTree(json);
+        String _name = jsonNode.get("name").asText();
+        int _age = jsonNode.get("age").asInt();
+        System.out.println("name : " + _name);
+        System.out.println("age : " + _age);
+
+        JsonNode cars = jsonNode.get("cars");
+        ArrayNode arrayNode = (ArrayNode) cars;
+
+        List<Car> _car = om.convertValue(arrayNode, new TypeReference<List<Car>>() {});
+        System.out.println(_car);
     }
 }
